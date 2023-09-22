@@ -9,6 +9,7 @@ public class Game : MonoBehaviour
     public GameObject roadObj;
     public GameObject videoObj;
     public GameObject bgmObj;
+    public Queue<string> cmdQueue = new Queue<string>();
 
     float delaySeconds = 2.0f;
     int countFinish = 0;
@@ -59,6 +60,27 @@ public class Game : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
             player.Move(-Vector3.left, false);
+        }
+
+        while (cmdQueue.Count > 0)
+        {
+            var cmd = cmdQueue.Dequeue();
+            var id = int.Parse(cmd.Substring(0,1));
+            var key = cmd.Substring(2,1);
+            Debug.Log("Dequeue id=" + id + " key=" + key);
+            MovePlayer(id, key);
+        }
+    }
+
+    public void MovePlayer(int id, string key)
+    {
+        var player = playerList[id].GetComponent<Player>();
+        switch (key)
+        {
+            case "W": player.Move(Vector3.up, true); break;
+            case "A": player.Move(Vector3.left, false); break;
+            case "S": player.Move(-Vector3.up, true); break;
+            case "D": player.Move(-Vector3.left, false); break;
         }
     }
 
