@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <title>連菁人迷宮遙控器</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/style.css?3">
+        <script src="js/script.js"></script>
+    </head>
+    <body onload="onloadRun()">
+        <div id="main-div">
+            <h1>連菁人迷宮遙控裝置</h1>
+            <h3 id="id-text"></h3>
+            <img id="id-img">
+            <div id="btn-div">
+                <img class='arrow-img' onclick="onclickBtn('W')" src="img/arrow-up.png" />
+                <br>
+                <img class='arrow-img' onclick="onclickBtn('A')" src="img/arrow-left.png" />
+                <img class='arrow-img' src="img/empty.png" />
+                <img class='arrow-img' onclick="onclickBtn('D')" src="img/arrow-right.png" />
+                <br>
+                <img class='arrow-img' onclick="onclickBtn('S')" src="img/arrow-down.png" />
+            </div>
+        </div>
+    </body>
+</html>

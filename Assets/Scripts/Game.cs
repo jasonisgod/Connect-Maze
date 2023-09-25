@@ -13,13 +13,13 @@ public class Game : MonoBehaviour
 
     float delaySeconds = 2.0f;
     int countFinish = 0;
-
     int currentNumber = 1;
+    bool isFirst = true;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        StartCoroutine(MovePlayerFirst());
     }
 
     // Update is called once per frame
@@ -69,6 +69,25 @@ public class Game : MonoBehaviour
             var key = cmd.Substring(2,1);
             Debug.Log("Dequeue id=" + id + " key=" + key);
             MovePlayer(id, key);
+        }
+        
+        if (isFirst)
+        {
+            isFirst = false;
+            MovePlayerFirst();
+        }
+    }
+
+    private IEnumerator MovePlayerFirst()
+    {
+        for (var i = 0; i < 2; i++)
+        {
+            yield return new WaitForSeconds(1.0f);
+            Debug.Log("MovePlayerFirst");
+            MovePlayer(1, "S");
+            MovePlayer(2, "A");
+            MovePlayer(3, "D");
+            MovePlayer(4, "W");
         }
     }
 

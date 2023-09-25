@@ -6,9 +6,17 @@ is_running = True
 app = Flask(__name__)
 client_socket = None
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# @app.route('/')
+# def index():
+#     return render_template('index.html')
+
+# @app.route('/js/script.js')
+# def get_js():
+#     return render_template('js/script.js')
+
+# @app.route('/css/style.css')
+# def get_css():
+#     return render_template('css/style.css')
 
 @app.route('/click')
 def click():

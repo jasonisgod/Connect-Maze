@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
 
     float wallDistance = 0.5f;
     float targetDistance = 0.1f;
-    float finishDistance = 0.9f;
+    float finishDistance = 1.8f;
     float speed = 50;
     bool isFinished = false;
 
