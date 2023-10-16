@@ -40,7 +40,7 @@ def run_socket():
     # Set the socket to non-blocking mode
     server_socket.setblocking(False)
 
-    server_address = ('localhost', 12345)
+    server_address = ('0.0.0.0', 9099)
     server_socket.bind(server_address)
     server_socket.listen(5)
 
@@ -76,5 +76,5 @@ def run_socket():
 
 timer = threading.Timer(0, run_socket)
 timer.start()
-app.run(host='0.0.0.0', port=8000)
+app.run(host='0.0.0.0', port=9090)
 is_running = False
