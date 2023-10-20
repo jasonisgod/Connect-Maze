@@ -1,5 +1,6 @@
 
-const URL_BASE = 'https://jasonisgod.xyz/maze/api/click'
+const URL_BASE = 'https://skhhiays.xyz/maze/api/click'
+// const URL_BASE = 'https://jasonisgod.xyz/maze/api/click'
 // const URL_BASE = 'http://192.168.101.125:8000/click'
 
 var id = 0
