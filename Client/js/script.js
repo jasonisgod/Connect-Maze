@@ -8,7 +8,7 @@ function onloadRun() {
     try {
         id = (new URLSearchParams(window.location.search)).get('id')
         var img = document.getElementById('id-img')
-        img.src = 'img/logo-' + id + '.png'
+        img.src = 'img/maze-logo-' + id + '.png'
         document.getElementById('id-text').textContent = '#' + id
     } catch {
         document.getElementById('id-text').textContent = 'error'

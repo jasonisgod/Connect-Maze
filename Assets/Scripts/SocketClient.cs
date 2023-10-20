@@ -48,7 +48,8 @@ public class SocketClient : MonoBehaviour
         try
         {
             // socketConnection = new TcpClient("8.217.201.173", 9099);
-            socketConnection = new TcpClient("jasonisgod.xyz", 9099);
+            // socketConnection = new TcpClient("jasonisgod.xyz", 9099);
+            socketConnection = new TcpClient("skhhiays.xyz", 9099);
             // socketConnection = new TcpClient("localhost", 12345);
             Debug.Log("Socket connected");
             Byte[] bytes = new Byte[1024];

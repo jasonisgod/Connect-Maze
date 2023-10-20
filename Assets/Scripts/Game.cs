@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Game : MonoBehaviour
 {
@@ -43,23 +44,23 @@ public class Game : MonoBehaviour
         }
 
         // var player = GameObject.Find("Player" + currentNumber).GetComponent<Player>();
-        var player = playerList[currentNumber].GetComponent<Player>();
+        // var player = playerList[currentNumber].GetComponent<Player>();
 
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            player.Move(Vector3.up, true);
+            MovePlayer(currentNumber, "W");
         }
         if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            player.Move(Vector3.left, false);
+            MovePlayer(currentNumber, "A");
         }
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            player.Move(-Vector3.up, true);
+            MovePlayer(currentNumber, "S");
         }
         if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
         {
-            player.Move(-Vector3.left, false);
+            MovePlayer(currentNumber, "D");
         }
 
         while (cmdQueue.Count > 0)
@@ -80,19 +81,24 @@ public class Game : MonoBehaviour
 
     private IEnumerator MovePlayerFirst()
     {
+        yield return new WaitForSeconds(2.0f);
         for (var i = 0; i < 2; i++)
         {
             yield return new WaitForSeconds(1.0f);
             Debug.Log("MovePlayerFirst");
-            MovePlayer(1, "S");
-            MovePlayer(2, "A");
-            MovePlayer(3, "D");
-            MovePlayer(4, "W");
+            MovePlayer(1, "S", true);
+            MovePlayer(2, "A", true);
+            MovePlayer(3, "D", true);
+            MovePlayer(4, "W", true);
         }
     }
 
-    public void MovePlayer(int id, string key)
+    public void MovePlayer(int id, string key, bool sound = true)
     {
+        if (sound)
+        {
+            GameObject.Find("PopAudio").GetComponent<AudioSource>().Play();
+        }
         var player = playerList[id].GetComponent<Player>();
         switch (key)
         {
@@ -106,11 +112,15 @@ public class Game : MonoBehaviour
     public void SetFinish(int number)
     {
         Debug.Log("Player" + number + " Finish");
+        GameObject.Find("FinishAudio").GetComponent<AudioSource>().Play();
         finishList[number].SetActive(true);
         countFinish += 1;
         if (countFinish == 4)
         {
-            StartCoroutine(PlayVideo());
+            // StartCoroutine(PlayVideo());
+            // StartCoroutine(LoadEndScene());
+            GameObject.Find("NextScene").GetComponent<NextScene>().Run();
+            GameObject.Find("ProcessAudio").GetComponent<AudioSource>().Play();
         }
     }
 
