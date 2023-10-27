@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
 
 public class NextScene : MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class NextScene : MonoBehaviour
         {
             Run();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
+        }
     }
 
     public void Run()
@@ -33,6 +38,11 @@ public class NextScene : MonoBehaviour
         }
     }
 
+    void Reload()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     private IEnumerator _Run()
     {
         if (nextSceneName != "Ending")
@@ -40,7 +50,16 @@ public class NextScene : MonoBehaviour
             // GameObject.Find("BGM").GetComponent<MusicFadeOut>().Run();
             MusicFadeOut.Run("BGM");
         }
-        GameObject.Find("DoorCloseScript").GetComponent<DoorClose>().Run();
+
+        try
+        {
+            GameObject.Find("DoorCloseScript").GetComponent<DoorClose>().Run();
+        }
+        catch (Exception e)
+        {
+            print(e);
+        }
+        
         Debug.Log("LoadEndScene waiting...");
         yield return new WaitForSeconds(delaySeconds);
         Debug.Log("LoadEndScene " + nextSceneName);
