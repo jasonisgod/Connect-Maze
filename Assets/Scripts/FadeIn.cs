@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class FadeIn : MonoBehaviour
 {
-    Vector3 targetScale = Vector3.one;
+    Vector3 targetScale;
     bool isRunning = false;
 
     // Start is called before the first frame update
     void Start()
     {
+        targetScale = transform.localScale;
         transform.localScale = Vector3.zero;
     }
 

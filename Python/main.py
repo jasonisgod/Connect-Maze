@@ -4,7 +4,8 @@ import socket, select
 
 is_running = True
 app = Flask(__name__)
-client_socket = None
+sockets_to_monitor = []
+server_socket = None
 
 # @app.route('/')
 # def index():
@@ -24,7 +25,8 @@ def click():
     key = request.args.get('key')
     flag = None
     try:
-        client_socket.send((id + ' ' + key).encode())
+        send_socket((id + ' ' + key).encode())
+        # client_socket.send((id + ' ' + key).encode())
         flag = True
     except Exception as e:
         print(e)
@@ -32,8 +34,17 @@ def click():
     print(f'/click id={id} key={key} socket={flag})')
     return jsonify(success=True)
 
+def send_socket(bytes):
+    for socket in sockets_to_monitor:
+        if socket == server_socket:
+            continue
+        try:
+            socket.send(bytes)
+        except:
+            pass
+
 def run_socket():
-    global client_socket
+    global sockets_to_monitor, server_socket
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
 

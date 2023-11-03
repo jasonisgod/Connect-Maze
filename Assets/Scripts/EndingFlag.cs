@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class EndingFlag : MonoBehaviour
 {
-    bool flag = false;
+    public bool flag = false;
 
     GameObject titleObj;
     GameObject botObj;
@@ -21,6 +21,7 @@ public class EndingFlag : MonoBehaviour
         // GameObject.Find("BGM").GetComponent<MusicFadeOut>().Run();
         MusicFadeOut.Run("BGM");
         StartCoroutine(DestroyDoor());
+        StartCoroutine(DestroyAll());
     }
 
     // Update is called once per frame
@@ -38,13 +39,12 @@ public class EndingFlag : MonoBehaviour
             // GameObject.Find("TitleBlock2").GetComponent<LinearMove>().enabled = true;
             // GameObject.Find("ProcessAudio").GetComponent<MusicFadeOut>().Run();
             MusicFadeOut.Run("ProcessAudio");
-            StartCoroutine(DestroyAll());
         }
     }
 
     IEnumerator DestroyDoor()
     {
-        yield return new WaitForSeconds(4.0f);
+        yield return new WaitForSeconds(8.0f);
         GameObject.Find("DoorOpen").SetActive(false);
         GameObject.Find("DoorClose").SetActive(false);
     }

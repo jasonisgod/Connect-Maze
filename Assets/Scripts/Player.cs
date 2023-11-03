@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
                 game.SetFinish(number);
                 isFinished = true;
             }
+            GameObject.Find("PopAudio").GetComponent<AudioSource>().Play();
         }
     }
 

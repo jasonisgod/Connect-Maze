@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Game : MonoBehaviour
 {
@@ -10,17 +12,23 @@ public class Game : MonoBehaviour
     public GameObject roadObj;
     public GameObject videoObj;
     public GameObject bgmObj;
+    public GameObject activatePanel;
+    public TMP_Text activateText;
+    public TMP_Text activateBarText;
+    public GameObject activateSuccess;
     public Queue<string> cmdQueue = new Queue<string>();
 
     float delaySeconds = 2.0f;
     int countFinish = 0;
     int currentNumber = 1;
     bool isFirst = true;
+    public bool isActivated = false;
 
     // Start is called before the first frame update
     void Start()
     {
         StartCoroutine(MovePlayerFirst());
+        activatePanel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -77,6 +85,11 @@ public class Game : MonoBehaviour
             isFirst = false;
             MovePlayerFirst();
         }
+        
+        // if (Input.GetKeyDown(KeyCode.Return))
+        // {
+        //     StartCoroutine(Activate());
+        // }
     }
 
     private IEnumerator MovePlayerFirst()
@@ -95,10 +108,10 @@ public class Game : MonoBehaviour
 
     public void MovePlayer(int id, string key, bool sound = true)
     {
-        if (sound)
-        {
-            GameObject.Find("PopAudio").GetComponent<AudioSource>().Play();
-        }
+        // if (sound)
+        // {
+        //     GameObject.Find("PopAudio").GetComponent<AudioSource>().Play();
+        // }
         var player = playerList[id].GetComponent<Player>();
         switch (key)
         {
@@ -119,9 +132,47 @@ public class Game : MonoBehaviour
         {
             // StartCoroutine(PlayVideo());
             // StartCoroutine(LoadEndScene());
-            GameObject.Find("NextScene").GetComponent<NextScene>().Run();
-            GameObject.Find("ProcessAudio").GetComponent<AudioSource>().Play();
+            Activate();
         }
+    }
+
+    public void Activate()
+    {
+        if (isActivated)
+        {
+            return;
+        }
+        isActivated = true;
+        StartCoroutine(_Activate());
+    }
+
+    private IEnumerator _Activate()
+    {
+        Debug.Log("Activate()");
+        activateText.text = "0%";
+        yield return new WaitForSeconds(0.5f);
+        activatePanel.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        GameObject.Find("ProcessAudio").GetComponent<AudioSource>().Play();
+        for (var i = 0; i <= 100; i++)
+        {
+            yield return new WaitForSeconds(0.02f);
+            activateText.text = i.ToString() + "%";
+            var barStr = "";
+            for (var j = 0; j < 20; j++)
+            {
+                barStr += (i / 5 > j? "> ": "_ ");
+            }
+            activateBarText.text = barStr;
+        }
+        GameObject.Find("NextScene").GetComponent<NextScene>().Run();
+        yield return new WaitForSeconds(0.5f);
+        activateSuccess.SetActive(true);
+        GameObject.Find("FinishAudio").GetComponent<AudioSource>().Play();
+        // for (var i = 0; i < 3; i++)
+        // {
+        //     yield return new WaitForSeconds(0.5f);
+        // }
     }
 
     private IEnumerator PlayVideo()

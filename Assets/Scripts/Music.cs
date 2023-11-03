@@ -8,7 +8,7 @@ public class Music : MonoBehaviour
     void Start()
     {
         var audioSource = GetComponent<AudioSource>();
-        audioSource.time = 212f;
+        // audioSource.time = 212f;
         audioSource.Play();
     }
 

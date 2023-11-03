@@ -10,7 +10,8 @@ public class NextScene : MonoBehaviour
 
     float delaySeconds = 2.0f;
     bool isRunning = false;
-    
+    // int pressCount = 0;
+
     void Start()
     {
         
@@ -19,9 +20,37 @@ public class NextScene : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            Run();
+            var name = SceneManager.GetActiveScene().name;
+            if (name == "Starting")
+            {
+                Run();
+            }
+            if (name == "Waiting")
+            {
+                Run();
+            }
+            if (name == "SampleScene")
+            {
+                var game = GameObject.Find("Game").GetComponent<Game>();
+                if (!game.isActivated)
+                {
+                    game.Activate();
+                }
+                else
+                {
+                    Run();
+                }
+            }
+            if (name == "Ending")
+            {
+                var endingFlag = GameObject.Find("EndingFlag").GetComponent<EndingFlag>();
+                if (endingFlag.flag)
+                {
+                    Run();
+                }
+            }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
